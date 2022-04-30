@@ -14,7 +14,7 @@ def main():
 def login():
     form = forms.LoginForm()
     if form.validate_on_submit():
-        return redirect('/')
+        return redirect(url_for('main'))
 
     return render_template('login.html')
 
