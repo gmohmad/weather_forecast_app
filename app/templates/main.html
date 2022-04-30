@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="content">
+    <div class="main-info">
+        <div class="temp">17{{temp}} &#176;<span class="unit" ng-click="changeUnit()">C{{unit}}</span></div>
+        <div class="city">Krasnodar{{city}}</div>
+	    <div class="country">RU{{country}}</div>
+    </div>
+
+    <div class="extra-info">
+        Войдите что задать комфортную для вас температуру!
+    </div>
+</div>
+
+{% endblock %}
