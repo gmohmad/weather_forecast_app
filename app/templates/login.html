@@ -12,28 +12,45 @@
 
                 <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
                     <form method="POST" action="{{ url_for('login') }}">
+
                         <div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
                             <p class="lead fw-normal mb-0 me-3">Sign in</p>
                         </div>
+
+                        {{ form.hidden_tag() }}
             
                         <!-- Email input -->
                         <div class="form-outline mb-4">
-                            <input type="email" id="email_id" class="form-control form-control-lg" required=""
-                                placeholder="Enter email" name="email" />
+                            <input type="email" id="email" class="form-control form-control-lg" required=""
+                                placeholder="Enter email" name="email" size="32" />
+
+                                {% for error in form.email.errors %}
+                                    <span class="form-error">{{ error }}</span>
+                                {% endfor %}
                         </div>
             
                         <!-- Password input -->
                         <div class="form-outline mb-3">
-                            <input type="password" id="password_id" class="form-control form-control-lg" required=""
-                                placeholder="Enter password" name="password" />
+                            <input type="password" id="password" class="form-control form-control-lg" required=""
+                                placeholder="Enter password" name="password" size="32" />
+
+                                {% for error in form.password.errors %}
+                                    <span class="form-error">{{ error }}</span>
+                                {% endfor %}
+                        </div>
+                        
+                        <!-- Remember me input -->
+                        <div class="form-outline mb-3">
+                            <input id="remember_me" name="remember_me" type="checkbox" value="y" class="">
+                            <label for="remember_me">Remember Me</label>
                         </div>
             
-                        <div class="text-center text-lg-start mt-4 pt-2">
-                            <button type="button" class="btn btn-primary btn-lg"
-                                style="padding-left: 2.5rem; padding-right: 2.5rem;">Login</button>
+                        <div class="text-center text-lg-start mb-5 pt-2">
+                            <input id="submit" name="submit" type="submit" value="Login" class="btn btn-primary btn-lg">
                             <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account? <a href="{{ url_for('signup') }}"
                                 class="link-light">Register</a></p>
                         </div>
+
                     </form>
                 </div>
             </div>

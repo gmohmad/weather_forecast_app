@@ -10,7 +10,13 @@
     </div>
 
     <div class="extra-info">
-        Войдите что задать комфортную для вас температуру!
+        {% if current_user.is_anonymous %}
+            <h1 class="mb-3">Hi!</h1>
+            <h4>Register to set a comfortable temperature for you!</h4>
+        {% else %}
+            <h3>Hi, {{ current_user.username }}!</h3>
+        {% endif %}
+        
     </div>
 </div>
 

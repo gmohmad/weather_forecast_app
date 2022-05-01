@@ -67,10 +67,18 @@ body {
 	height: 100%;
 	position: relative;
 	float: right;
+    padding: 20px;
+    text-align: center;
 	
 	display: flex;
 	justify-content: center;
 	align-items: center;
+    flex-direction: column;
     border-bottom-right-radius: 7%;
     border-top-right-radius: 7%;
+}
+
+.form-error {
+    color: #8d0404;
+    font-size: 19px;
 }

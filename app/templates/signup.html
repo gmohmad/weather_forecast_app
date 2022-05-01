@@ -12,46 +12,73 @@
 
                 <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
 
-                    {% with messages = get_flashed_messages() %}
+                    <!-- {% with messages = get_flashed_messages() %}
                         {% if messages %}
                             <div class="notification is-danger">
                                 {{ messages[0] }}. Go to <a href="{{ url_for('login') }}">login page</a>.
                             </div>
                         {% endif %}
-                    {% endwith %}
+                    {% endwith %} -->
 
                     <form method="POST" action="{{ url_for('signup') }}">
                         <div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
                             <p class="lead fw-normal mb-0 me-3">Sign up</p>
                         </div>
 
+                        {{ form.hidden_tag() }}
+
                         <!-- Username input -->
                         <div class="form-outline mb-4">
-                            <input type="text" id="username_id" class="form-control form-control-lg" required=""
+                            <input type="text" id="username" size="15" class="form-control form-control-lg" required=""
                                 name="username" placeholder="Enter username" />
+                                
+                                {% for error in form.username.errors %}
+                                    <span class="form-error">{{ error }}</span>
+                                {% endfor %}
                         </div>
             
                         <!-- Email input -->
                         <div class="form-outline mb-4">
-                            <input type="email" id="email_id" class="form-control form-control-lg" required=""
+                            <input type="email" id="email" size="20" class="form-control form-control-lg" required=""
                                 name="email" placeholder="Enter email" />
+
+                                {% for error in form.email.errors %}
+                                    <span class="form-error">{{ error }}</span>
+                                {% endfor %}
                         </div>
 
                         <!-- Comfortable temperature input -->
                         <div class="form-outline mb-4">
-                            <input type="text" id="comfortable_temperature_id" class="form-control form-control-lg" required=""
+                            <input type="number" id="comfortable_temperature" class="form-control form-control-lg" required=""
                                 name="comfortable_temperature" placeholder="Enter comfortable temperature" />
+
+                                {% for error in form.comfortable_temperature.errors %}
+                                    <span class="form-error">{{ error }}</span>
+                                {% endfor %}
                         </div>
             
                         <!-- Password input -->
                         <div class="form-outline mb-3">
-                            <input type="password" id="password_id" class="form-control form-control-lg" required=""
+                            <input type="password" id="password" size="8" class="form-control form-control-lg" required=""
                                 name="password" placeholder="Enter password" />
+
+                                {% for error in form.password.errors %}
+                                    <span class="form-error">{{ error }}</span>
+                                {% endfor %}
+                        </div>
+
+                        <!-- Repeat password input -->
+                        <div class="form-outline mb-3">
+                            <input type="password" id="password2" size="8" class="form-control form-control-lg" required=""
+                                name="password2" placeholder="Repeat password" />
+
+                                {% for error in form.password2.errors %}
+                                    <span class="form-error">{{ error }}</span>
+                                {% endfor %}
                         </div>
             
-                        <div class="text-center text-lg-start mt-4 pt-2">
-                            <button type="submit" class="btn btn-primary btn-lg"
-                                style="padding-left: 2.5rem; padding-right: 2.5rem;">Signup</button>
+                        <div class="text-center text-lg-start mb-5 pt-2">
+                            <input id="submit" name="submit" type="submit" value="Signup" class="btn btn-primary btn-lg">
                             <p class="small fw-bold mt-2 pt-1 mb-0">
                                 Do you have an account?
                                 <a href="{{ url_for('login') }}" class="link-light">Login</a>

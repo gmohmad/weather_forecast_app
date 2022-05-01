@@ -1,7 +1,9 @@
-from flask import render_template, redirect, url_for, request, flash
-from werkzeug.security import generate_password_hash, check_password_hash
+from flask import render_template, redirect, url_for, flash
+from flask_login import current_user, login_user
+from flask_login import logout_user
 
 from app import app, db, forms
+from app.models import User
 
 
 @app.route('/')
@@ -12,46 +14,53 @@ def main():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    form = forms.LoginForm()
-    if form.validate_on_submit():
+    if current_user.is_authenticated:
         return redirect(url_for('main'))
 
-    return render_template('login.html')
+    form = forms.LoginForm()
 
-@app.route('/signup')
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+
+        if user is None or not user.check_password(form.password.data):
+            flash('Invalid email or password.')
+            return redirect(url_for('login'))
+
+        login_user(user, remember=form.remember_me.data)
+        return redirect(url_for('main'))
+
+    return render_template('login.html', form=form)
+
+
+@app.route('/signup', methods=['GET', 'POST'])
 def signup():
-    return render_template('signup.html')
+    if current_user.is_authenticated:
+        return redirect(url_for('main'))
 
+    form = forms.SignupForm()
 
-@app.route('/signup', methods=['POST'])
-def signup_post():
-    username = request.form.get('username')
-    email = request.form.get('email')
-    comfortable_temperature = request.form.get('comfortable_temperature')
-    password = request.form.get('password')
+    if form.validate_on_submit():
 
-    user = User.query.filter_by(email=email).first()
+        user = User(
+            username=form.username.data,
+            email=form.email.data,
+            comfortable_temperature=form.comfortable_temperature.data
+        )
 
-    if user:
-        flash('Email address already exists')
-        return redirect(url_for('signup'))
+        user.set_password(form.password.data)
+        db.session.add(user)
+        db.session.commit()
 
-    new_user = User(
-        email=email,
-        username=username,
-        comfortable_temperature=comfortable_temperature,
-        password=generate_password_hash(password, method='sha256')
-    )
+        flash('Congratulations, you are now a registered user!')
+        return redirect(url_for('login'))
 
-    db.session.add(new_user)
-    db.session.commit()
-
-    return redirect(url_for('login'))
+    return render_template('signup.html', form=form)
 
 
 @app.route('/logout')
 def logout():
-    return 'Logout'
+    logout_user()
+    return redirect(url_for('main'))
 
 
 if __name__ == '__main__':
