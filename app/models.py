@@ -6,6 +6,10 @@ from app import login
 
 
 class User(UserMixin, db.Model):
+    """
+    User model
+    """
+
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(15))
     email = db.Column(db.String(20), unique=True)
@@ -13,9 +17,17 @@ class User(UserMixin, db.Model):
     comfortable_temperature = db.Column(db.Integer)
 
     def set_password(self, password):
+        """
+        Set password for user instanse
+        """
+
         self.password = generate_password_hash(password, method='sha256')
 
     def check_password(self, password):
+        """
+        Check password for user instanse
+        """
+
         return check_password_hash(self.password, password)
 
     def __repr__(self):

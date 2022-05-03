@@ -1,23 +1,68 @@
+from datetime import date, datetime
+
+import requests
 from flask import render_template, redirect, url_for, flash
 from flask_login import current_user, login_user
 from flask_login import logout_user
 
-from app import app, db, forms
+from app import app, db
 from app.models import User
+from app.forms import SignupForm, LoginForm
+from app.utils import get_weather_data, is_comfortable_temperature
 
 
 @app.route('/')
 def main():
-    context = {}
+
+    weather_data = get_weather_data('Грозный')
+
+    current_date = datetime.strftime(date.today(), '%d %B %Y')
+    temp = weather_data.get('main', {}).get('temp', '?')
+    weather = weather_data.get('weather', [])
+    country = weather_data.get('sys', {}).get('country', '?')
+    comfortable_temperature = is_comfortable_temperature(current_user, temp)
+
+    if weather_data.get('weather', []):
+        weather = weather[0].get('main', '?')
+    else:
+        weather = '?'
+
+    context = {
+        'date': current_date,
+        'city': 'Grozny',
+        'temp': temp,
+        'weather': weather,
+        'country': country,
+        'is_comfortable_temperature': comfortable_temperature,
+    }
+
     return render_template('main.html', context=context)
+
+
+@app.route('/valute', methods=['GET'])
+def valute():
+    API_ENDPOINT = 'https://www.cbr-xml-daily.ru/daily_json.js'
+
+    response = requests.get(API_ENDPOINT).json()
+
+    USD = response.get('Valute', {}).get('USD', {}).get('Value')
+    EUR = response.get('Valute', {}).get('EUR', {}).get('Value')
+
+    context = {
+        'USD': USD,
+        'EUR': EUR
+    }
+
+    return render_template('valute.html', context=context)
 
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+
     if current_user.is_authenticated:
         return redirect(url_for('main'))
 
-    form = forms.LoginForm()
+    form = LoginForm()
 
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
@@ -34,10 +79,11 @@ def login():
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
+
     if current_user.is_authenticated:
         return redirect(url_for('main'))
 
-    form = forms.SignupForm()
+    form = SignupForm()
 
     if form.validate_on_submit():
 
@@ -59,6 +105,7 @@ def signup():
 
 @app.route('/logout')
 def logout():
+
     logout_user()
     return redirect(url_for('main'))
 

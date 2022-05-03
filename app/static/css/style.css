@@ -42,10 +42,16 @@ body {
 }
 	
 .temp {
-	font-size: 96px;
+	font-size: 80px;
 	font-family: 'Montserrat';
 	font-weight: 700;
-}	
+}
+
+.usd, .eur {
+    font-size: 50px;
+	font-family: 'Montserrat';
+	font-weight: 700;
+}
 
 .unit {
 	color: #F16C6C;

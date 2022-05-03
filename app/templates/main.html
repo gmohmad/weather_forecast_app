@@ -3,21 +3,67 @@
 {% block content %}
 
 <div class="content">
+
     <div class="main-info">
-        <div class="temp">17{{temp}} &#176;<span class="unit" ng-click="changeUnit()">C{{unit}}</span></div>
-        <div class="city">Krasnodar{{city}}</div>
-	    <div class="country">RU{{country}}</div>
+        <div class="temp"><span class="temp-value">{{ context.temp }}</span> &#176;<span class="unit" onclick="changeUnit()">C</span></div>
+        <div class="weather"><h1>{{ context.weather }}</h1></div>
+        <div class="date">{{ context.date }}</div>
+        <div class="city">{{ context.city }}</div>
+	    <div class="country">{{ context.country }}</div>
     </div>
 
     <div class="extra-info">
+
         {% if current_user.is_anonymous %}
             <h1 class="mb-3">Hi!</h1>
             <h4>Register to set a comfortable temperature for you!</h4>
         {% else %}
             <h3>Hi, {{ current_user.username }}!</h3>
+
+            {% if context.is_comfortable_temperature %}
+                <h4>Now is your comfortable temperature :)</h4>
+            {% else %}
+                <h4>Now is not your comfortable temperature :(</h4>
+            {% endif %}
+
         {% endif %}
         
     </div>
+
 </div>
+
+<script>
+
+    const convertToF = (celsius) => {
+        fahrenheit = celsius * 9 / 5 + 32;
+        return fahrenheit.toFixed(2);
+    }
+
+    const convertToC = (fahrenheit) => {
+        celsius = (fahrenheit - 32) * 5 / 9;
+        return celsius.toFixed(2);
+    }
+
+    const changeUnit = () => {
+        let unit = document.querySelector('.unit').innerHTML;
+        let temp = Number(document.querySelector('.temp .temp-value').innerHTML);
+
+        let new_unit;
+        let new_temp_value;
+
+        if (unit === 'C') {
+            new_unit = 'F';
+            new_temp_value = convertToF(temp);
+
+        } else if (unit === 'F') {
+            new_unit = 'C';
+            new_temp_value = convertToC(temp);
+        }
+
+        document.querySelector('.unit').innerHTML = new_unit;
+        document.querySelector('.temp .temp-value').innerHTML = new_temp_value;
+    }
+
+</script>
 
 {% endblock %}
