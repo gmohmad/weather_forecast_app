@@ -16,7 +16,7 @@ APP_ID = 'b21a2633ddaac750a77524f91fe104e7'
 
 PORT = int(os.environ.get('PORT', '8443'))
 TELEGRAM_TOKEN = '5362702089:AAHw5AYgX2WMQv8Y4xt8QVyQy7J24ixQxzc'
-APP_NAME = 'https://chatbot-weather-bot.herokuapp.com/'
+APP_NAME = 'https://weather-telegram-chatbot.herokuapp.com/'
 
 chatbot = ChatBot()
 
@@ -109,5 +109,5 @@ if __name__ == '__main__':
     updater.start_polling()
 
     # For deploy on heroku
-    # updater.start_webhook(listen="0.0.0.0", port=PORT, url_path=TELEGRAM_TOKEN, webhook_url=APP_NAME + TELEGRAM_TOKEN)
-    updater.idle()
+    updater.start_webhook(listen="0.0.0.0", port=PORT, url_path=TELEGRAM_TOKEN, webhook_url=APP_NAME + TELEGRAM_TOKEN)
+    # updater.idle()
