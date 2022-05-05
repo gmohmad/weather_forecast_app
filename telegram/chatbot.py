@@ -16,7 +16,7 @@ APP_ID = 'b21a2633ddaac750a77524f91fe104e7'
 
 PORT = int(os.environ.get('PORT', '8443'))
 TELEGRAM_TOKEN = '5362702089:AAHw5AYgX2WMQv8Y4xt8QVyQy7J24ixQxzc'
-APP_NAME = 'https://weather-telegram-chatbot.herokuapp.com/'
+APP_NAME = 'https://weather-tg-chatbot.herokuapp.com/'
 
 chatbot = ChatBot()
 
