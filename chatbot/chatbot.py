@@ -1,4 +1,5 @@
 import os
+from posixpath import split
 
 import requests
 from telegram.ext import (
@@ -23,9 +24,11 @@ chatbot = ChatBot()
 
 def start(update, context):
     chatbot.start()
-    update.message.reply_text(' '.join('Hi👋🏻 Here you can check the weather forecast! \
-        Enter your city 🌆, the temperature 🌡 that is comfortable for you and \
-            the weather 🌦 that you like best'.split()))
+    update.message.reply_text(
+        ' '.join('Hi👋🏻 Here you can check the weather forecast! Enter \
+            your city 🌆, the temperature 🌡 that is comfortable for you and \
+            the weather 🌦 that you like best'.split())
+    )
 
     update.message.reply_text('Enter your city 🌆')
 
@@ -59,8 +62,10 @@ def conversation(update, context):
             chatbot.comfortable_temperature = message
 
             chatbot.confirm()
-            update.message.reply_text(f'Your city is {chatbot.city}, is the temperature \
-                comfortable for you - {chatbot.comfortable_temperature} degrees? Please confirm')
+            update.message.reply_text(
+                ' '.join(f'Your city is {chatbot.city}, is the temperature \
+                comfortable for you - {chatbot.comfortable_temperature} degrees? Please confirm'.split())
+            )
 
         else:
             update.message.reply_text('Must be entered in numeric format 🔢. Please try again 😊!')
@@ -91,11 +96,15 @@ def conversation(update, context):
             update.message.reply_text('To start over, enter the command /start')
 
         else:
-            update.message.reply_text('You must either confirm or not confirm. If you change your mind \
-                about watching the weather, enter the command /stop')
+            update.message.reply_text(
+                ' '.join('You must either confirm or not confirm. If you change your mind \
+                about watching the weather, enter the command /stop'.split())
+            )
 
-            update.message.reply_text(f'Your city is {chatbot.city}, is the temperature \
-                comfortable for you - {chatbot.comfortable_temperature} degrees? Please confirm')
+            update.message.reply_text(
+                ' '.join(f'Your city is {chatbot.city}, is the temperature \
+                comfortable for you - {chatbot.comfortable_temperature} degrees? Please confirm'.split())
+            )
 
 
 if __name__ == '__main__':
