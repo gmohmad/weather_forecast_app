@@ -46,6 +46,5 @@ class ChatBot():
             model=self,
             states=self.states,
             transitions=self.transitions,
-            initial='asleep',
-            ignore_invalid_triggers=True
+            initial='asleep'
         )
