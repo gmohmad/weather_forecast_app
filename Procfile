@@ -1,2 +1,1 @@
-cd telegram
-web: python chatbot.py
+web: python --chdir ./telegram chatbot.py
