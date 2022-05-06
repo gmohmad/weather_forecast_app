@@ -1,1 +1,2 @@
-web: python3 telegram/chatbot.py
+cd telegram
+web: python chatbot.py
