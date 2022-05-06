@@ -31,3 +31,8 @@ flask db upgrade
 ```
 flask run
 ```
+
+### В случае если телеграм бот не будет работать запустите в консоли команду
+```
+heroku run python chatbot/chatbot.py
+```
