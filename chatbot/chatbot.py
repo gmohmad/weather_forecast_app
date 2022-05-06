@@ -23,9 +23,9 @@ chatbot = ChatBot()
 
 def start(update, context):
     chatbot.start()
-    update.message.reply_text('Hi👋🏻 Here you can check the weather forecast! \
+    update.message.reply_text(' '.join('Hi👋🏻 Here you can check the weather forecast! \
         Enter your city 🌆, the temperature 🌡 that is comfortable for you and \
-            the weather 🌦 that you like best')
+            the weather 🌦 that you like best'.split()))
 
     update.message.reply_text('Enter your city 🌆')
 
