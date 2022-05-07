@@ -118,5 +118,5 @@ if __name__ == '__main__':
     updater.start_polling()
 
     # For deploy on heroku
-    updater.start_webhook(listen="0.0.0.0", port=PORT, url_path=TELEGRAM_TOKEN, webhook_url=APP_NAME + TELEGRAM_TOKEN)
-    # updater.idle()
+    # updater.start_webhook(listen="0.0.0.0", port=PORT, url_path=TELEGRAM_TOKEN, webhook_url=APP_NAME + TELEGRAM_TOKEN)
+    updater.idle()
