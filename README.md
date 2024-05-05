@@ -1,38 +1,38 @@
-## Для запуска проекта выполните следующие команды
+## To start the project follow these steps
 
-### Установите переменную среды
+### Set environment variable
 
-#### В Windows
+#### Windows
 ```
 set FLASK_APP=run.py
 ```
 
-#### В Linux и macOS
+#### Linux/macOS
 ```
 export FLASK_APP=run.py
 ```
 
-### Создайте миграции (пропустите этот шаг)
+### Create migrations (skip this step)
 ```
 flask db init
 ```
 
-### Выполните миграции
+### Execute migrations
 ```
 flask db migrate -m "Initial migration"
 ```
 
-### Примените миграции
+### Apply migrations
 ```
 flask db upgrade
 ```
 
-### Запустите приложение выполнив команду ниже
+### Run the app
 ```
 flask run
 ```
 
-### В случае если телеграм бот не будет работать запустите в консоли команду
+### If telegram bot is not starting run this command
 ```
 python chatbot/chatbot.py
 ```
